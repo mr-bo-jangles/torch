@@ -40,6 +40,7 @@ module.exports = {
       globals: {
         it: "readable",
         describe: "readable",
+        before: "readable",
         beforeEach: "readable",
         afterEach: "readable",
       },

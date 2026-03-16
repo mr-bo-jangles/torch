@@ -88,35 +88,65 @@ class Torch {
    * Called from the updateWorldTime hook, GM client only.
    */
   static async checkDurations(worldTime) {
+    let scenesChecked = 0;
+    let tokensChecked = 0;
+    let tokensWithExpiry = 0;
     for (const scene of game.scenes) {
+      scenesChecked++;
       for (const tokenDoc of scene.tokens) {
+        tokensChecked++;
         let expiresAt = tokenDoc.getFlag("torch", "expiresAt");
         if (expiresAt === undefined) continue;
 
+        tokensWithExpiry++;
         let state = tokenDoc.getFlag("torch", "lightSourceState");
-        if (!state || state === "off") continue;
-
         let sourceName = tokenDoc.getFlag("torch", "lightSource");
+        debugLog(
+          `checkDurations — token="${tokenDoc.name}" scene="${scene.name}"` +
+            ` source="${sourceName}" state="${state}"` +
+            ` expiresAt=${expiresAt} worldTime=${worldTime}` +
+            ` delta=${expiresAt - worldTime}s`,
+        );
+
+        if (!state || state === "off") continue;
         if (!sourceName) continue;
 
         if (worldTime >= expiresAt) {
-          // Source has expired — auto-extinguish
+          debugLog(
+            `checkDurations — EXPIRED: "${sourceName}" on "${tokenDoc.name}"`,
+          );
           await Torch.expireSource(scene, tokenDoc, sourceName);
         } else {
-          // Check for low-fuel warning
           let warnAt = tokenDoc.getFlag("torch", "warnAt");
           let warned = tokenDoc.getFlag("torch", "durationWarned");
+          debugLog(
+            `checkDurations — not expired yet, warnAt=${warnAt}` +
+              ` warned=${warned} pastWarn=${worldTime >= warnAt}`,
+          );
           if (warnAt && worldTime >= warnAt && !warned) {
             await Torch.warnLowFuel(tokenDoc, sourceName, expiresAt, worldTime);
           }
         }
       }
     }
+    debugLog(
+      `checkDurations — scanned ${scenesChecked} scenes,` +
+        ` ${tokensChecked} tokens, ${tokensWithExpiry} with active expiry`,
+    );
   }
 
   static async expireSource(scene, tokenDoc, sourceName) {
     let actor = game.actors.get(tokenDoc.actorId);
-    if (!actor) return;
+    if (!actor) {
+      debugLog(
+        `expireSource — no actor found for actorId="${tokenDoc.actorId}", skipping`,
+      );
+      return;
+    }
+    debugLog(
+      `expireSource — expiring "${sourceName}" on token="${tokenDoc.name}"` +
+        ` actor="${actor.name}"`,
+    );
     let library = await SourceLibrary.load(
       game.system.id,
       Settings.fallbackLightRadii.bright,
@@ -149,6 +179,10 @@ class Torch {
   static async warnLowFuel(tokenDoc, sourceName, expiresAt, worldTime) {
     let remaining = Math.max(1, Math.ceil((expiresAt - worldTime) / 60));
     let ownerIds = Torch.getTokenOwnerIds(tokenDoc);
+    debugLog(
+      `warnLowFuel — "${sourceName}" on "${tokenDoc.name}"` +
+        ` remaining=${remaining}min ownerIds=${JSON.stringify(ownerIds)}`,
+    );
     if (ownerIds.length > 0) {
       ChatMessage.create({
         content: game.i18n.format("torch.duration.warning", {
@@ -229,6 +263,9 @@ Hooks.on("ready", () => {
     TorchSocket.handleSocketRequest(request);
   });
   Hooks.on("updateWorldTime", (worldTime /*, dt*/) => {
+    debugLog(
+      `updateWorldTime hook fired — worldTime=${worldTime}, isGM=${game.user.isGM}`,
+    );
     if (!game.user.isGM) return;
     Torch.checkDurations(worldTime);
   });
@@ -277,3 +314,5 @@ Hooks.once("init", () => {
 });
 
 console.log("Torch | --- Module loaded");
+
+export { Torch };

@@ -60,6 +60,7 @@ export class MockToken {
     this.actorId = this.actor.system.id;
     this.flags = { torch: {} };
     this.light = {};
+    this._object = this;
     if (lightSource) {
       this.flags.torch.lightSource = lightSource;
     }
