@@ -77,7 +77,7 @@
     "torch.css"
   ],
   "manifest": "https://github.com/mr-bo-jangles/torch/releases/download/v3.2.0/module.json",
-  "download": "https://github.com/mr-bo-jangles/torch/releases/download/v3.2.0/torch-v3.1.0.zip",
+  "download": "https://github.com/mr-bo-jangles/torch/releases/download/v3.2.0/torch-v3.2.0.zip",
   "url": "https://github.com/mr-bo-jangles/torch",
   "compatibility": {
     "minimum": "13",
