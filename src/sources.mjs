@@ -265,54 +265,42 @@ export default {
         type: "equipment",
         consumable: false,
         states: 2,
-        light: [
-          { bright: 10, dim: 10, angle: 360, color: "#555555", alpha: 0.5 },
-        ],
+        light: [{ bright: 10, dim: 10, angle: 360, color: "#555555", alpha: 0.5 }],
       },
       "Portable Light, Flashlight": {
         name: "Portable Light, Flashlight",
         type: "equipment",
         consumable: false,
         states: 2,
-        light: [
-          { bright: 20, dim: 20, angle: 90, color: "#555555", alpha: 0.5 },
-        ],
+        light: [{ bright: 20, dim: 20, angle: 90, color: "#555555", alpha: 0.5 }],
       },
       "Portable Light, Beacon": {
         name: "Portable Light, Beacon",
         type: "equipment",
         consumable: false,
         states: 2,
-        light: [
-          { bright: 20, dim: 50, angle: 360, color: "#555555", alpha: 0.5 },
-        ],
+        light: [{ bright: 20, dim: 50, angle: 360, color: "#555555", alpha: 0.5 }],
       },
       "Portable Light, Spotlight": {
         name: "Portable Light, Spotlight",
         type: "equipment",
         consumable: false,
         states: 2,
-        light: [
-          { bright: 100, dim: 100, angle: 90, color: "#555555", alpha: 0.5 },
-        ],
+        light: [{ bright: 100, dim: 100, angle: 90, color: "#555555", alpha: 0.5 }],
       },
       "Comm Unit, Personal": {
         name: "Comm Unit, Personal",
         type: "equipment",
         consumable: false,
         states: 2,
-        light: [
-          { bright: 15, dim: 15, angle: 90, color: "#555555", alpha: 0.5 },
-        ],
+        light: [{ bright: 15, dim: 15, angle: 90, color: "#555555", alpha: 0.5 }],
       },
       "Dancing Lights": {
         name: "Dancing Lights",
         type: "cantrip",
         consumable: false,
         states: 2,
-        light: [
-          { bright: 0, dim: 10, angle: 360, color: "#555555", alpha: 0.5 },
-        ],
+        light: [{ bright: 0, dim: 10, angle: 360, color: "#555555", alpha: 0.5 }],
       },
     },
   },
@@ -364,9 +352,7 @@ export default {
         type: "equipment",
         consumable: true,
         states: 2,
-        light: [
-          { bright: 0, dim: 2, angle: 360, color: "#ff9329", alpha: 0.6 },
-        ],
+        light: [{ bright: 0, dim: 2, angle: 360, color: "#ff9329", alpha: 0.6 }],
       },
       "Flashlight, Heavy": {
         name: "Flashlight, Heavy",
@@ -450,9 +436,7 @@ export default {
         type: "equipment",
         consumable: false,
         states: 2,
-        light: [
-          { bright: 190, dim: 200, angle: 6, color: "#ffd6aa", alpha: 1 },
-        ],
+        light: [{ bright: 190, dim: 200, angle: 6, color: "#ffd6aa", alpha: 1 }],
       },
     },
   },
