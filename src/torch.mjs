@@ -83,6 +83,100 @@ class Torch {
 
   static async toggleLightHeld(/*token*/) {}
 
+  /*
+   * Check all tokens for duration-based expiry and warnings.
+   * Called from the updateWorldTime hook, GM client only.
+   */
+  static async checkDurations(worldTime) {
+    for (const scene of game.scenes) {
+      for (const tokenDoc of scene.tokens) {
+        let expiresAt = tokenDoc.getFlag("torch", "expiresAt");
+        if (expiresAt === undefined) continue;
+
+        let state = tokenDoc.getFlag("torch", "lightSourceState");
+        if (!state || state === "off") continue;
+
+        let sourceName = tokenDoc.getFlag("torch", "lightSource");
+        if (!sourceName) continue;
+
+        if (worldTime >= expiresAt) {
+          // Source has expired — auto-extinguish
+          await Torch.expireSource(scene, tokenDoc, sourceName);
+        } else {
+          // Check for low-fuel warning
+          let warnAt = tokenDoc.getFlag("torch", "warnAt");
+          let warned = tokenDoc.getFlag("torch", "durationWarned");
+          if (warnAt && worldTime >= warnAt && !warned) {
+            await Torch.warnLowFuel(tokenDoc, sourceName, expiresAt, worldTime);
+          }
+        }
+      }
+    }
+  }
+
+  static async expireSource(scene, tokenDoc, sourceName) {
+    let actor = game.actors.get(tokenDoc.actorId);
+    if (!actor) return;
+    let library = await SourceLibrary.load(
+      game.system.id,
+      Settings.fallbackLightRadii.bright,
+      Settings.fallbackLightRadii.dim,
+      Settings.fallbackSourceName,
+      Settings.gameLightSources,
+      actor.prototypeToken.light,
+      Settings.ignoreEquipment,
+    );
+    let token = new TorchToken(tokenDoc, library);
+    await token.forceStateOff();
+
+    // Notify the token's owners via chat whisper
+    let ownerIds = Torch.getTokenOwnerIds(tokenDoc);
+    if (ownerIds.length > 0) {
+      ChatMessage.create({
+        content: game.i18n.format("torch.duration.expired", {
+          source: sourceName,
+        }),
+        whisper: ownerIds,
+        speaker: { alias: "Torch" },
+      });
+    }
+
+    debugLog(`${sourceName} expired on token ${tokenDoc.name}`);
+    Hooks.callAll("torch.expired", tokenDoc._object, sourceName);
+    Hooks.callAll("torch.changed", tokenDoc._object, sourceName, "off");
+  }
+
+  static async warnLowFuel(tokenDoc, sourceName, expiresAt, worldTime) {
+    let remaining = Math.max(1, Math.ceil((expiresAt - worldTime) / 60));
+    let ownerIds = Torch.getTokenOwnerIds(tokenDoc);
+    if (ownerIds.length > 0) {
+      ChatMessage.create({
+        content: game.i18n.format("torch.duration.warning", {
+          source: sourceName,
+          remaining: remaining,
+        }),
+        whisper: ownerIds,
+        speaker: { alias: "Torch" },
+      });
+    }
+    await tokenDoc.setFlag("torch", "durationWarned", true);
+    debugLog(
+      `${sourceName} low fuel warning on token ${tokenDoc.name} — ${remaining} min remaining`,
+    );
+  }
+
+  static getTokenOwnerIds(tokenDoc) {
+    let actor = game.actors.get(tokenDoc.actorId);
+    if (!actor) return [];
+    return Object.entries(actor.ownership)
+      .filter(
+        ([id, level]) =>
+          level === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER && id !== "default",
+      )
+      .map(([id]) => id)
+      .filter((id) => game.users.get(id)?.active);
+  }
+
   static async changeLightSource(token, name) {
     await token.setCurrentLightSource(name);
     Hooks.callAll(
@@ -133,6 +227,10 @@ Hooks.on("ready", () => {
   });
   game.socket.on("module.torch", (request) => {
     TorchSocket.handleSocketRequest(request);
+  });
+  Hooks.on("updateWorldTime", (worldTime /*, dt*/) => {
+    if (!game.user.isGM) return;
+    Torch.checkDurations(worldTime);
   });
 });
 

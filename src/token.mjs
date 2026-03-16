@@ -88,6 +88,27 @@ export default class TorchToken {
     }
   }
 
+  get litAt() {
+    return this._token.getFlag("torch", "litAt");
+  }
+
+  get expiresAt() {
+    return this._token.getFlag("torch", "expiresAt");
+  }
+
+  get durationWarned() {
+    return this._token.getFlag("torch", "durationWarned");
+  }
+
+  remainingDuration() {
+    let source = this._library.getLightSource(this.currentLightSource);
+    if (!source || !source.duration) return null;
+    let expiresAt = this.expiresAt;
+    if (expiresAt === undefined) return null;
+    let remaining = Math.max(0, expiresAt - game.time.worldTime);
+    return Math.ceil(remaining / 60);
+  }
+
   /* Orchestrate State Management */
 
   async forceStateOff() {
@@ -149,6 +170,17 @@ export default class TorchToken {
         await this._consumeSource(source);
       }
     }
+    // Clear duration tracking flags
+    await this._clearDurationFlags();
+  }
+
+  async _clearDurationFlags() {
+    await this._token.update({
+      "flags.torch.-=litAt": null,
+      "flags.torch.-=expiresAt": null,
+      "flags.torch.-=warnAt": null,
+      "flags.torch.-=durationWarned": null,
+    });
   }
 
   async _turnOnSource() {
@@ -164,6 +196,22 @@ export default class TorchToken {
     } else {
       // self lighting
       await this._token.update(getLightUpdates(source.light[0]));
+    }
+    // Set duration tracking flags if source has a finite duration
+    if (source.duration && source.duration > 0) {
+      let now = game.time.worldTime;
+      let durationSeconds = source.duration * 60;
+      let warnThreshold = Settings.durationWarningThreshold;
+      let warnAt =
+        warnThreshold > 0
+          ? now + Math.floor(durationSeconds * warnThreshold)
+          : 0;
+      await this._token.update({
+        "flags.torch.litAt": now,
+        "flags.torch.expiresAt": now + durationSeconds,
+        "flags.torch.warnAt": warnAt,
+        "flags.torch.durationWarned": false,
+      });
     }
   }
 
