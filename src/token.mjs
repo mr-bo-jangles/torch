@@ -222,10 +222,12 @@ export default class TorchToken {
           : 0;
       debugLog(
         `_turnOnSource — setting duration flags:` +
+          ` source="${this.currentLightSource}"` +
           ` litAt=${now} expiresAt=${now + durationSeconds}` +
           ` warnAt=${warnAt} (threshold=${warnThreshold})`,
       );
       await this._token.update({
+        "flags.torch.lightSource": this.currentLightSource,
         "flags.torch.litAt": now,
         "flags.torch.expiresAt": now + durationSeconds,
         "flags.torch.warnAt": warnAt,
