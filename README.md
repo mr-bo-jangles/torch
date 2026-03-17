@@ -272,15 +272,15 @@ The following is the current status of translation. Some features have arrived, 
 
 | Language | Completion                                | Contributors              |
 | -------- | ----------------------------------------- | ------------------------- |
-| de       | `[####################----]` 24/29 (83%)  | ToGreedy, Beff42, MKBraun |
+| de       | `[########################]` 29/29 (100%) | ToGreedy, Beff42, MKBraun |
 | en       | `[########################]` 29/29 (100%) | deuce, lupestro           |
-| es       | `[####################----]` 24/29 (83%)  | lozanoje, WallaceMcGregor |
-| fr       | `[####################----]` 24/29 (83%)  | Diraen, Aymeeric          |
-| it       | `[#############-----------]` 16/29 (55%)  | GregoryWarn               |
-| ja       | `[#############-----------]` 16/29 (55%)  | doumoku                   |
-| pt-br    | `[#############-----------]` 16/29 (55%)  | Innocenti, Andersants     |
-| zh-cn    | `[#####-------------------]` 06/29 (21%)  | xticime                   |
-| zh-tw    | `[######------------------]` 08/29 (28%)  | zeteticl                  |
+| es       | `[########################]` 29/29 (100%) | lozanoje, WallaceMcGregor |
+| fr       | `[########################]` 29/29 (100%) | Diraen, Aymeeric          |
+| it       | `[################--------]` 20/29 (69%)  | GregoryWarn               |
+| ja       | `[################--------]` 20/29 (69%)  | doumoku                   |
+| pt-br    | `[################--------]` 20/29 (69%)  | Innocenti, Andersants     |
+| zh-cn    | `[##########--------------]` 10/29 (34%)  | xticime                   |
+| zh-tw    | `[############------------]` 12/29 (41%)  | zeteticl                  |
 
 PRs for further translations will be dealt with promptly. While Korean is most especially desired (thank you, doumoku for Japanese, also on the short list) - all others are welcome.
 

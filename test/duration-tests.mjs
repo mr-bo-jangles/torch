@@ -28,6 +28,7 @@ const ALL_SETTINGS = {
   ignoreEquipment: false,
   gmUsesInventory: true,
   playerUsesInventory: true,
+  debugLogging: false,
   durationWarningThreshold: 0.9,
 };
 
@@ -379,6 +380,7 @@ describe("Duration Tests >", () => {
     it("Warning threshold of 0 sets warnAt to 0", async () => {
       let settings = Object.assign({}, ALL_SETTINGS, {
         durationWarningThreshold: 0,
+        debugLogging: false,
       });
       let actor = new MockActor(
         "1",

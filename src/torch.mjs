@@ -14,11 +14,9 @@ import SourceLibrary from "./library.mjs";
  * ----------------------------------------------------------------------------
  */
 
-let DEBUG = true;
-
 let debugLog = (...args) => {
-  if (DEBUG) {
-    console.log(...args);
+  if (Settings.debugLogging) {
+    console.log("Torch |", ...args);
   }
 };
 class Torch {

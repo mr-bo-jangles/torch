@@ -43,6 +43,10 @@ export default class Settings {
       : false;
   }
 
+  static get debugLogging() {
+    return game.settings.get("torch", "debugLogging");
+  }
+
   static get durationWarningThreshold() {
     return game.settings.get("torch", "durationWarningThreshold");
   }
@@ -104,6 +108,14 @@ export default class Settings {
         type: Boolean,
       });
     }
+    game.settings.register("torch", "debugLogging", {
+      name: game.i18n.localize("torch.settings.debugLogging.name"),
+      hint: game.i18n.localize("torch.settings.debugLogging.hint"),
+      scope: "world",
+      config: true,
+      default: false,
+      type: Boolean,
+    });
     game.settings.register("torch", "durationWarningThreshold", {
       name: game.i18n.localize("torch.settings.durationWarningThreshold.name"),
       hint: game.i18n.localize("torch.settings.durationWarningThreshold.hint"),

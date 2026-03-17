@@ -1,12 +1,9 @@
 import TorchSocket from "./socket.mjs";
 import Settings from "./settings.mjs";
 
-let DEBUG = true;
-
-// eslint-disable-next-line no-unused-vars
 const debugLog = (...args) => {
-  if (DEBUG) {
-    console.log(...args);
+  if (Settings.debugLogging) {
+    console.log("Torch |", ...args);
   }
 };
 
