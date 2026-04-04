@@ -13,7 +13,7 @@
     "copy:dist5": "npx cpy ./README.md dist/",
     "build": "npm-run-all build:prod copy-dist",
     "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
+    "build:prod": "webpack --mode=production --config-node-env=production",
     "test": "npm-run-all lint build:dev test:units",
     "test:units": "mocha",
     "cover": "c8 --reporter html mocha",
