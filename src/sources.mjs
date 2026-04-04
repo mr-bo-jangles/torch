@@ -1152,7 +1152,7 @@ export default {
       "Hazard Suit": "Flashlight",
       "Advanced Battle Dress": "Flashlight",
       "Headlamp": "Flashlight",
-      "Glowstick": "Chemlight"
+      "Glowstick": "Chemlight",
     },
     "sources": {
       "Flashlight": {
@@ -1164,9 +1164,9 @@ export default {
           {
             "bright": 5,
             "dim": 10,
-            "angle": 50
-          }
-        ]
+            "angle": 50,
+          },
+        ],
       },
       "Lighter": {
         "name": "Lighter",
@@ -1184,10 +1184,10 @@ export default {
               "type": "torch",
               "speed": 5,
               "intensity": 5,
-              "reverse": false
-            }
-          }
-        ]
+              "reverse": false,
+            },
+          },
+        ],
       },
       "Chemlight": {
         "name": "Chemlight",
@@ -1200,11 +1200,11 @@ export default {
             "dim": 2,
             "angle": 360,
             "color": "#00ff00",
-            "alpha": 0.5
-          }
-        ]
-      }
-    }
+            "alpha": 0.5,
+          },
+        ],
+      },
+    },
   },
   "default": {
     "system": "default",

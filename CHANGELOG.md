@@ -2,6 +2,10 @@
 
 ## Middle Kingdom - v10 -> main branch
 
+### 3.2.0 - April 4, 2026 - Provided light sources for mothership
+- [FEATURE] Now contains Mothership (mosh) light sources
+- [BUGFIX] At least updated the documentation to warn about the outstanding bug limiting the number of states for a light source to no more than two. (Now, I have to fix it, right?)
+
 ### 3.1.1 - April 4, 2026 - Checked for v14 and dependency bumps
 - [INTERNAL] Tested and config bumped to claim support for v14
 - [CHORE] After nearly a year, bumped runtime and dev dependencies
