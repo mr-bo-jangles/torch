@@ -2,6 +2,10 @@
 
 ## Middle Kingdom - v10 -> main branch
 
+### 3.1.1 - April 4, 2026 - Checked for v14 and dependency bumps
+- [INTERNAL] Tested and config bumped to claim support for v14
+- [CHORE] After nearly a year, bumped runtime and dev dependencies
+
 ### 3.1.0 - July 26, 2025 - Additional light sources for zweihander and ac2d20 & units change to CoC7 from feet to yards/meters
 - [FEATURE] Light sources for zweihander and ac2d20 - thanks, lozonje! I'm finally delivering it.
 - [FEATURE] Light sources for CoC7 changed from assuming scene scaled in feet to assuming scene in yards/meters 
