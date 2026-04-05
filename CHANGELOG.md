@@ -2,7 +2,7 @@
 
 ## Middle Kingdom - v10 -> main branch
 
-### 3.2.0 - March 17, 2026 - Configurable light source durations
+### 3.3.0 - March 17, 2026 - Configurable light source durations
 
 - [FEATURE] (@mr-bo-jangles) Light sources can now have a `duration` (in minutes of world time). When lit, the module tracks elapsed world time and automatically extinguishes the source when it runs out.
   - Built-in durations added for D&D 5e, Pathfinder 1e, and Pathfinder 2e equipment sources (Torch 60 min, Candle 60 min, Lamp 360 min, Lanterns 360 min, etc.).
@@ -14,6 +14,14 @@
 - [FEATURE] (@mr-bo-jangles) Placeholder strings translated for all 8 supported languages.
 - [BUGFIX] (@mr-bo-jangles) Light source name is now persisted to the `lightSource` flag when duration tracking is active, fixing an issue where the source name was unresolved during expiry checks.
 - [INTERNAL] (@mr-bo-jangles) Added 17 new unit tests covering duration flag management, expiry checking, warning logic, and hook verification.
+
+### 3.2.0 - April 4, 2026 - Provided light sources for mothership
+- [FEATURE] Now contains Mothership (mosh) light sources
+- [BUGFIX] At least updated the documentation to warn about the outstanding bug limiting the number of states for a light source to no more than two. (Now, I have to fix it, right?)
+
+### 3.1.1 - April 4, 2026 - Checked for v14 and dependency bumps
+- [INTERNAL] Tested and config bumped to claim support for v14
+- [CHORE] After nearly a year, bumped runtime and dev dependencies
 
 ### 3.1.0 - July 26, 2025 - Additional light sources for zweihander and ac2d20 & units change to CoC7 from feet to yards/meters
 

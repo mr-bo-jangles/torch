@@ -1499,6 +1499,69 @@ export default {
       },
     },
   },
+  mosh: {
+    system: "mosh",
+    topology: "standard",
+    quantity: "quantity",
+    aliases: {
+      Vaccsuit: "Flashlight",
+      "Hazard Suit": "Flashlight",
+      "Advanced Battle Dress": "Flashlight",
+      Headlamp: "Flashlight",
+      Glowstick: "Chemlight",
+    },
+    sources: {
+      Flashlight: {
+        name: "Flashlight",
+        type: "equipment",
+        consumable: false,
+        states: 2,
+        light: [
+          {
+            bright: 5,
+            dim: 10,
+            angle: 50,
+          },
+        ],
+      },
+      Lighter: {
+        name: "Lighter",
+        type: "equipment",
+        consumable: false,
+        states: 2,
+        light: [
+          {
+            bright: 1,
+            dim: 3,
+            angle: 360,
+            color: "#ff9329",
+            alpha: 0.5,
+            animation: {
+              type: "torch",
+              speed: 5,
+              intensity: 5,
+              reverse: false,
+            },
+          },
+        ],
+      },
+      Chemlight: {
+        name: "Chemlight",
+        type: "equipment",
+        consumable: true,
+        states: 2,
+        light: [
+          {
+            bright: 1,
+            dim: 2,
+            angle: 360,
+            color: "#00ff00",
+            alpha: 0.5,
+          },
+        ],
+      },
+    },
+  },
   default: {
     system: "default",
     topology: "none",

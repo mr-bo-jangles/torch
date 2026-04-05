@@ -19,6 +19,7 @@ Out of the box, the following are available:
 | earthdawn4e      | Candle, Lantern (Hooded), Lantern (Bullseye), Torch                                                                                                                                                                                             | en        |
 | everyday-heroes  | Flashlight/Headlamp, Glow Sticks                                                                                                                                                                                                                | en        |
 | gurps            | "Candle, Tallow", "Flashlight, Heavy", Mini Flashlight, Micro Flashlight, Survival Flashlight, Lantern, Torch, Bull's-Eye Lantern, "Electric Lantern, Small", "Electric Lantern, Large", Small Tactical Light, Large Tactical Light, Floodlight | en        |
+| mosh | Chemlight, Flashlight, Lighter | en
 | ose              | Torches, Lantern                                                                                                                                                                                                                                | en        |
 | pf1              | Candle, Lamp, Lantern, Bullseye Lantern, Hooded Lantern, Miner's Lantern, Torch                                                                                                                                                                 | en        |
 | pf2e             | Candle, Lantern (Hooded), Lantern (Bull's Eye), Torch. Everburning Torch                                                                                                                                                                        | en        |
@@ -103,7 +104,7 @@ The JSON has one top-level property per system, keyed by the Foundry id of the s
   - `standard` topology: equipment are `Item` objects. Almost all systems are `standard`.
   - `gurps` topology: light sources are collected under a property of the actor and require GURPS-specific functions to find it, manipulate how many you've got, etc.
   - If you drag items to your character to "gear up", your system is almost certainly `standard`, so omit the setting.
-- The `quantity` value tells the topology which property determines how many you have. It is a path to the quantity property within the "system" subtree of the object representing the light source. It defaults to `quantity`.
+- The `quantity` value tells the topology which property determines how many you have. It is a path to the quantity property within the "system" subtree of the object representing the light source. It defaults to `quantity`. [NB: Torch currently has a bug that limits you to only up to two "on" states, so `states` above can be no more than 2. This will be addressed in a future release.] 
   - For `standard`, it is the path to the field under item.system that contains the quantity. For nearly all systems, this is `quantity`. (For Earthdawn, however, it is `amount`.)
   - For `gurps`, it is the path to the field in a nested structure under the actor. It should be set to `amount`.
   - Some systems may not count inventory. For these, omit it, and use the default.
